@@ -1,0 +1,117 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">ВНЕСИ НОВА ПРОЕКЦИЈА</h1>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <form action="/projections/add" th:method="POST" style="color:white">
+                    <input id="id" type="hidden" name="id" th:value="(${movieProjection} != null ? ${movieProjection.getProjection_Id()} : '')">
+                    <div class="form-group">
+                        <label for="projection_id">ID</label>
+                        <input type="text"
+                               class="form-control"
+                               id="projection_id"
+                               name="projection_id"
+                               th:value="(${movieProjection} != null ? ${movieProjection.getProjection_Id()} : '')"
+                               required
+                               placeholder="ID за новата проекција">
+                    </div>
+                    <div class="form-group">
+                        <label for="projection_movie_start">Почеток на проекцијата</label>
+                        <input type="text"
+                               class="form-control"
+                               id="projection_movie_start"
+                               name="projection_movie_start"
+                               th:value="(${movieProjection} != null ? ${movieProjection.getProjection_movie_start()} : '')"
+                               required
+                               placeholder="Внеси почеток на проекција">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projection_movie_end">Крај на проекцијата</label>
+                        <input type="text"
+                               class="form-control"
+                               id="projection_movie_end"
+                               name="projection_movie_end"
+                               th:value="(${movieProjection} != null ? ${movieProjection.getProjection_movie_end()} : '')"
+                               required
+                               placeholder="Внеси крај на проекцијата">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projection_screening_date">Датум за почеток на проекцијата</label>
+                        <input type="date"
+                               class="form-control"
+                               id="projection_screening_date"
+                               name="projection_screening_date"
+                               th:value="(${movieProjection} != null ? ${movieProjection.getProjection_screening_date()} : '')"
+                               required
+                               placeholder="Внеси датум">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projection_type">Вид на проекција</label>
+                        <input type="text"
+                               class="form-control"
+                               id="projection_type"
+                               name="projection_type"
+                               th:value="(${movieProjection} != null ? ${movieProjection.getProjection_type()} : '')"
+                               required
+                               placeholder="Внеси вид на проекција">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projection_price">Цена </label>
+                        <input type="text"
+                               class="form-control"
+                               id="projection_price"
+                               name="projection_price"
+                               th:value="(${movieProjection} != null ? ${movieProjection.getProjection_price()} : '')"
+                               required
+                               placeholder="Внеси цена">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Филм</label>
+                        <select name="movie_id" class="form-control">
+                            <option th:if="${movieProjection} != null"
+                                    th:selected="${movieProjection.getMovie() != null &&
+                                moviePRojection.getMovie().getMovie_id() == movie.getMovie_id()}"
+                                    th:each="movie : ${movie}"
+                                    th:value="${movie.getMovie_id()}"
+                                    th:text="${movie.getMovie_name()}">
+                            </option>
+                            <option th:if="${movieProjection} == null"
+                                    th:each="movie : ${movie}"
+                                    th:value="${movie.getMovie_id()}"
+                                    th:text="${movie.getMovie_name()}">
+                            </option>
+                        </select>
+                        <label>Кино сала</label>
+                        <select name="auditorium_id" class="form-control" autocomplete="off">
+                            <option th:if="${auditorium != null}"
+                                    th:selected="${auditorium.getAuditorium_id() != null}"
+                                    th:each="auditorium : ${auditorium}"
+                                    th:value="${auditorium.getAuditorium_id()}"
+                                    th:text="${auditorium.getAuditorium_name()}" autocomplete="off">
+                            </option>
+                            <option th:if="${auditorium} == null"
+                                    th:each="auditorium: ${auditorium}"
+                                    th:value="${auditorium.getAuditorium_id()}"
+                                    th:text="${auditorium.getAuditorium_name()}" autocomplete="off">
+                            </option>
+                        </select>
+                    </div>
+
+                    <button id="submit" type="submit" class="btn btn-primary">Потврди</button>
+                    <a type="button" class="btn btn-primary" href="/projections">Назад<a>
+                    <a type="button" class="btn btn-primary" href="/movies/add-form">Внеси нов филм</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</th:block>
