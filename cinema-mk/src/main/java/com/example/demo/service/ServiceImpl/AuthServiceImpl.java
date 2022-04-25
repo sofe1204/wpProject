@@ -32,12 +32,12 @@ private final UserRepository userRepository;
     }
 
     @Override
-    public User login(String username, String password) {
-        if (username==null || username.isEmpty() || password==null || password.isEmpty()) {
+    public User login(String user_username, String user_password) {
+        if (user_username==null || user_username.isEmpty() || user_password==null || user_password.isEmpty()) {
             throw new InvalidArgumentsException();
         }
-        return userRepository.findByUsernameAndPassword(username,
-                password).orElseThrow(InvalidUserCredentialsException::new);
+        return userRepository.findByUsernameAndPassword(user_username,
+                user_password).orElseThrow(InvalidUserCredentialsException::new);
     }
 
 }

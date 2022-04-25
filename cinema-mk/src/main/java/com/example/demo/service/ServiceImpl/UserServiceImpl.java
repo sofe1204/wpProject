@@ -23,9 +23,9 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
     @Override
-    public UserDetails loadUserByUsername(String s) {
-        return userRepository.findByUsername(s)
-                .orElseThrow(()->new UsernameNotFoundException(s));
+    public UserDetails loadUserByUsername(String user_username) {
+        return userRepository.findByUsername(user_username)
+                .orElseThrow(()->new UsernameNotFoundException(user_username));
     }
     @Override
     public User register(Integer user_id, String user_username, String user_password, String user_repeatedPassword,
