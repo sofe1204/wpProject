@@ -2,6 +2,7 @@ package com.example.demo.repository;
 
 import com.example.demo.model.Client.Client;
 import com.example.demo.model.Gives.Gives;
+import com.example.demo.model.Movie;
 import com.example.demo.model.Reservation.Reservations;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -46,5 +47,6 @@ public interface ReservationsRepository extends JpaRepository<Reservations, Inte
             " \torder by r.reservation_id,mp.projection_id,u.user_name",nativeQuery = true)
     List<Reservations> findByUsersStats();
 
-
+    @Query(value="select * from RESERVATION where reservation_id=? ",nativeQuery = true)
+    void deleteById(Integer id);
 }

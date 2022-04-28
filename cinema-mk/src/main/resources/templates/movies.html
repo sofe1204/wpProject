@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <base href="${pageContext.request.contextPath}">
     <meta charset="utf-8">
@@ -57,11 +58,25 @@
                             <td th:text="${movies.getMovieGenreKey().getMovie().getMovie_cast()} "/>
                             <td th:text="${movies.getMovieGenreKey().getMovie().getMovie_film_director()} "/>
                             <td class="text-right">
+                                <th:block>
                                 <form th:action="@{/movie/projections/detailed-preview/}">
                                     <button class="btn2" type="submit" th:name="movie_id" th:value="${movies.getMovieGenreKey().getMovie().getMovie_id()}">Види проекции</button>
                                 </form>
                                 </th:block>
                             </td>
+                            <td class="text-right">
+                                <th:block>
+                                <form th:action="@{'/movies/{id}/delete' (id=${movies.getMovieGenreKey().getMovie().getMovie_id})}" th:method="POST">
+                                    <button sec:authorize="hasRole('ROLE_EMPLOYEE')" type="submit" class="delete-item">Избриши</button>
+                                </form>
+                                </th:block>
+                            </td>
+                            <td>
+                                <a type="button"  class="btn btn-sm btn-info edit-product" href="/movies/editMovie">Промени</a>
+                                </a>
+
+                            </td>
+
                         </tr>
                         </tbody>
                     </table>

@@ -75,4 +75,11 @@ public class ReservationServiceImpl implements ReservationService {
     public Optional<Reservations> findAll() {
         return this.reservationsRepository.findAllReservations();
     }
+
+    @Override
+    public void deleteId(Integer id) {
+        this.reservationsRepository.deleteById(id);
+    }
+
+
 }

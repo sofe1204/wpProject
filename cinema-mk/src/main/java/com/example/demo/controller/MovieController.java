@@ -53,6 +53,7 @@ public class MovieController {
         return "master-template";
     }
 
+
     @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
     @PostMapping("/add")
     public String saveMovie(
@@ -75,17 +76,42 @@ public class MovieController {
             this.movieGenreCombinationRepository.save(movieGenreCombination);
         return "redirect:/movies";
     }
-
-    /*
-    @RequestMapping("/view/movies/id?={movie_id}")
-    public String viewMovies(Model model, @RequestParam Integer movie_id){
-        List<MovieProjection> moviegoer = movieProjectionService.findByMovieID(movie_id);
-        model.addAttribute("moviegoer", moviegoer);
-        return "view";
-    }*/
-
-
-
+    @GetMapping("/editMovie")
+    public String editMoviePage(Model model) {
+        List<Movie> movie = this.movieService.findAll();
+        List<Genre> genres = this.genreRepository.findAll();
+        model.addAttribute("movie", movie);
+        model.addAttribute("genre", genres);
+        model.addAttribute("bodyContent", "editMovie");
+        return "master-template";
+    }
 
 
+    @PostMapping("/edit/{id}")
+    public String updateMovie(
+            @PathVariable Integer movie_id,
+            @RequestParam String movie_name,
+            @RequestParam String movie_age_category,
+            @RequestParam String movie_cast,
+            @RequestParam String movie_film_director,
+            @RequestParam String movie_production,
+            @RequestParam String movie_time_duration,
+            @RequestParam Integer genre_id )
+    {
+        this.movieService.update(movie_id, movie_name, movie_age_category, movie_cast, movie_production,movie_film_director, movie_time_duration);
+        MovieGenreKey movieGenreKey = new MovieGenreKey();
+        movieGenreKey.setMovie(this.movieService.findById(movie_id).get());
+        movieGenreKey.setGenre(this.genreRepository.findById(genre_id).get());
+        MovieGenreCombination movieGenreCombination = new MovieGenreCombination();
+        movieGenreCombination.setMovieGenreKey(movieGenreKey);
+        this.movieGenreCombinationRepository.save(movieGenreCombination);
+        return "redirect:/movies";
+    }
+
+
+    @PostMapping("/{id}/delete")
+    public String delete(@PathVariable Integer id) {
+        this.movieService.deleteMovieById(id);
+        return "redirect:/movies";
+    }
 }

@@ -25,10 +25,13 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     @Query(value="select * from MovieProjection where movie_id=? ",nativeQuery = true)
     List<Movie> ViewByID(Integer movie_id);
 
-    @Query(value ="select movie_name from Movie where movie_name=?",nativeQuery = true)
+    @Query(value ="select * from Movie where movie_name=?",nativeQuery = true)
     Optional<Movie> findByName(String movie_name);
 
 
     @Query(value="select * from Movie where movie_name=?",nativeQuery = true)
     Optional<Movie> findAllByName(String s);
+
+    @Query(value="select movie_id from Movie where movie_id=? ",nativeQuery = true)
+    void deleteById(Integer id);
 }

@@ -39,7 +39,14 @@
                         <td th:text="${seats.getSeatCompositeKey().getAuditorium().getAuditorium_capacity()}"/>
                         <td th:text="${seats.getSeatCompositeKey().getAuditorium().getFirm().getFirm_name()}"/>
                         <td th:text="${seats.getSeatCompositeKey().getAuditorium().getFirm().getFirm_adress()}"/>
+
                     </tr>
+<!--                    <td class="text-right">-->
+<!--                        <form th:each="reservations : ${reservation}" th:action="@{'/reserve/delete/{id}' (id=${reservations.getReservation_id()})}" th:method="POST">-->
+<!--                            <button sec:authorize="hasRole('ROLE_EMPLOYEE')" type="submit" class="delete-item">Delete</button>-->
+<!--                        </form>-->
+<!--                        </th:block>-->
+<!--                    </td>-->
                     </tbody>
                 </table>
             </div>

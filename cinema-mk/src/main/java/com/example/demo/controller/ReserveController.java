@@ -8,14 +8,15 @@ import com.example.demo.model.PaymentType;
 import com.example.demo.model.Reservation.Reservations;
 import com.example.demo.model.Seat.Seat;
 import com.example.demo.repository.*;
+import com.example.demo.service.ReservationService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -31,14 +32,16 @@ public class ReserveController {
     private final MovieProjectionRepository movieProjectionRepository;
     private final ClientRepository clientRepository;
     private final ReservationsRepository reservationsRepository;
+    private final ReservationService reservationService;
 
-    public ReserveController(SeatRepository seatRepository, AuditoriumRepository auditoriumRepository, PaymentTypeRepository paymentTypeRepository, MovieProjectionRepository movieProjectionRepository, ClientRepository clientRepository, ReservationsRepository reservationsRepository) {
+    public ReserveController(SeatRepository seatRepository, AuditoriumRepository auditoriumRepository, PaymentTypeRepository paymentTypeRepository, MovieProjectionRepository movieProjectionRepository, ClientRepository clientRepository, ReservationsRepository reservationsRepository, ReservationService reservationService) {
         this.seatRepository = seatRepository;
         this.auditoriumRepository = auditoriumRepository;
         this.paymentTypeRepository = paymentTypeRepository;
         this.movieProjectionRepository = movieProjectionRepository;
         this.clientRepository = clientRepository;
         this.reservationsRepository = reservationsRepository;
+        this.reservationService = reservationService;
     }
     @PreAuthorize("hasRole('ROLE_EMPLOYEE')" +
           " || hasRole('Client')" +" || hasRole(' ROLE_CLIENT')" )
@@ -94,5 +97,9 @@ public class ReserveController {
         return "redirect:/movies";
     }
 
-
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        this.reservationService.deleteId(id);
+        return "redirect:/reserve";
+    }
 }

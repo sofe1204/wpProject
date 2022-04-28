@@ -40,14 +40,6 @@ public class Reservations {
     public MovieProjection movieProjection;
 
 
-
-    /*
-    @Embedded
-    public ReservationCombo reservationCombo;
-
-
-     */
-
     public Reservations(Integer reservation_id, LocalDateTime reservation_date, PaymentType paymentType, Seat seat, Client client, MovieProjection movieProjection) {
         this.reservation_id = reservation_id;
         this.reservation_date = reservation_date;
